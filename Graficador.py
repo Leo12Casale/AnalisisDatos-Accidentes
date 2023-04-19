@@ -11,22 +11,23 @@ columns=['ID','Severity','Start_Time','End_Time','Start_Lat','Start_Lng','End_La
 
 #Para graficar ATRIBUTOS
 # Calcular la frecuencia de cada categoría en la columna "Severity"
-freq = df["Severity"].value_counts()
+columna="Severity"
+freq = df[columna].value_counts()
 # Crear un gráfico torta de la frecuencia de cada categoría
 freq.plot(kind="pie")
 # Agregar etiquetas al gráfico
-plt.title("Distribución de Severidad")
+plt.title("Distribución de " + columna)
 plt.show()
 
 #Para graficar INDICADORES
 #Establezco los límites del histograma
-bins = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-# Crear un histograma con los bins personalizados
-freq, bins, patches = plt.hist(df["Visibility(mi)"], bins=bins)
-# Agregar etiquetas al gráfico
-plt.title("Distribución de Visibilidad")
-plt.xlabel("Visibilidad(mi)")
-plt.ylabel("Frecuencia")
+columna="Visibility(mi)"
+valor_min = df[columna].min()
+valor_max = df[columna].max()
+num_intervalos = 10
+amplitud_intervalo = (valor_max - valor_min) / num_intervalos
+df[columna].plot.hist(bins=num_intervalos, range=(valor_min, valor_max))
+plt.xticks([valor_min + i * amplitud_intervalo for i in range(num_intervalos + 1)])
 plt.show()
 
 #df2=df[['Severity']]
